@@ -13,9 +13,11 @@ Calling an external tool for every query is expensive and slow. ToolGate reads t
 ## Installation
 
 ```bash
-pip install toolgate
-# With the FastAPI server:
-pip install "toolgate[server]"
+# Install core library
+pip install toolgate-probe
+
+# With FastAPI server
+pip install "toolgate-probe[server]"
 ```
 
 ## Quickstart
