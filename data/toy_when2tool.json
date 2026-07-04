@@ -20,6 +20,86 @@
         "label": 1
     },
     {
+        "prompt": "What is 15% of 8400?",
+        "label": 1
+    },
+    {
+        "prompt": "Convert 72 Fahrenheit to Celsius.",
+        "label": 1
+    },
+    {
+        "prompt": "What is today's date?",
+        "label": 1
+    },
+    {
+        "prompt": "What is the current Bitcoin price?",
+        "label": 1
+    },
+    {
+        "prompt": "How many days between Jan 1 2020 and Mar 15 2024?",
+        "label": 1
+    },
+    {
+        "prompt": "What is 9999 divided by 37?",
+        "label": 1
+    },
+    {
+        "prompt": "Get me the latest news headlines.",
+        "label": 1
+    },
+    {
+        "prompt": "What is the current population of India?",
+        "label": 1
+    },
+    {
+        "prompt": "Calculate compound interest on $5000 at 7% for 10 years.",
+        "label": 1
+    },
+    {
+        "prompt": "What is the current time in New York?",
+        "label": 1
+    },
+    {
+        "prompt": "What is the exchange rate of USD to INR today?",
+        "label": 1
+    },
+    {
+        "prompt": "Find the prime factors of 84932.",
+        "label": 1
+    },
+    {
+        "prompt": "What is 2 raised to the power of 64?",
+        "label": 1
+    },
+    {
+        "prompt": "Search for the latest papers on LLM routing.",
+        "label": 1
+    },
+    {
+        "prompt": "What is the distance from Mumbai to Delhi in km?",
+        "label": 1
+    },
+    {
+        "prompt": "What is 456 * 789?",
+        "label": 1
+    },
+    {
+        "prompt": "What is the current weather in London?",
+        "label": 1
+    },
+    {
+        "prompt": "How many seconds in 3 weeks?",
+        "label": 1
+    },
+    {
+        "prompt": "What is log base 2 of 1024?",
+        "label": 1
+    },
+    {
+        "prompt": "What is the latest version of Python?",
+        "label": 1
+    },
+    {
         "prompt": "What is the capital of France?",
         "label": 0
     },
@@ -37,6 +117,86 @@
     },
     {
         "prompt": "Give me a synonym for 'happy'.",
+        "label": 0
+    },
+    {
+        "prompt": "What is the speed of light?",
+        "label": 0
+    },
+    {
+        "prompt": "Who invented the telephone?",
+        "label": 0
+    },
+    {
+        "prompt": "What is photosynthesis?",
+        "label": 0
+    },
+    {
+        "prompt": "Name three programming languages.",
+        "label": 0
+    },
+    {
+        "prompt": "What is the boiling point of water?",
+        "label": 0
+    },
+    {
+        "prompt": "Who painted the Mona Lisa?",
+        "label": 0
+    },
+    {
+        "prompt": "What is the largest planet in the solar system?",
+        "label": 0
+    },
+    {
+        "prompt": "Explain what a neural network is.",
+        "label": 0
+    },
+    {
+        "prompt": "What is the chemical formula for water?",
+        "label": 0
+    },
+    {
+        "prompt": "Who was the first person to walk on the moon?",
+        "label": 0
+    },
+    {
+        "prompt": "What is the meaning of the word 'ephemeral'?",
+        "label": 0
+    },
+    {
+        "prompt": "Name the continents of the world.",
+        "label": 0
+    },
+    {
+        "prompt": "What is Newton's first law of motion?",
+        "label": 0
+    },
+    {
+        "prompt": "Who wrote the Harry Potter series?",
+        "label": 0
+    },
+    {
+        "prompt": "What is the capital of Japan?",
+        "label": 0
+    },
+    {
+        "prompt": "Explain what machine learning is.",
+        "label": 0
+    },
+    {
+        "prompt": "What language is spoken in Brazil?",
+        "label": 0
+    },
+    {
+        "prompt": "Who discovered penicillin?",
+        "label": 0
+    },
+    {
+        "prompt": "What is DNA?",
+        "label": 0
+    },
+    {
+        "prompt": "Name the primary colors.",
         "label": 0
     }
 ]

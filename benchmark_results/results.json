@@ -1,0 +1,18 @@
+{
+  "dataset": "data/toy_when2tool.json",
+  "tau": 0.5,
+  "n_train": 40,
+  "n_test": 10,
+  "accuracy": 1.0,
+  "precision": 1.0,
+  "recall": 1.0,
+  "f1": 1.0,
+  "roc_auc": 1.0,
+  "latency_mean_ms": 105.9,
+  "latency_median_ms": 84.6,
+  "latency_p95_ms": 206.6,
+  "cost_baseline": 0.2,
+  "cost_with_gate": 0.162,
+  "cost_saved": 0.038,
+  "cost_saved_pct": 19.0
+}

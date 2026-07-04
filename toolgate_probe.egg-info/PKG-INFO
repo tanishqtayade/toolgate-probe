@@ -1,3 +1,35 @@
+Metadata-Version: 2.4
+Name: toolgate-probe
+Version: 0.1.0
+Summary: LLM routing — decide whether a query needs a tool or can be answered directly using hidden-state probes.
+License: MIT
+Project-URL: Homepage, https://github.com/tanishqtayade/toolgate
+Project-URL: Repository, https://github.com/tanishqtayade/toolgate
+Project-URL: Issues, https://github.com/tanishqtayade/toolgate/issues
+Keywords: llm,routing,tool-use,transformers,nlp
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Science/Research
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Topic :: Scientific/Engineering :: Artificial Intelligence
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+Requires-Dist: torch>=2.0
+Requires-Dist: transformers>=4.40
+Requires-Dist: scikit-learn>=1.3
+Requires-Dist: numpy>=1.24
+Provides-Extra: server
+Requires-Dist: fastapi>=0.110; extra == "server"
+Requires-Dist: uvicorn[standard]>=0.29; extra == "server"
+Provides-Extra: dev
+Requires-Dist: pytest>=8.0; extra == "dev"
+Requires-Dist: pytest-asyncio; extra == "dev"
+Requires-Dist: httpx; extra == "dev"
+
 # ToolGate
 
 **LLM routing using hidden-state probes** — decide in milliseconds whether a query needs a tool (calculator, search, API) or can be answered directly from the model's memory.
@@ -87,22 +119,6 @@ toolgate/
     └── raw_hf.py       # Raw HuggingFace integration
 server.py               # FastAPI server + dashboard
 ```
-
-## Benchmark Results
-
-Evaluated on 50 labeled examples (25 tool-needed, 25 direct answers).
-
-| Metric | Value |
-|--------|-------|
-| Accuracy | 100% |
-| Precision | 100% |
-| Recall | 100% |
-| F1 Score | 100% |
-| ROC-AUC | 1.000 |
-| Mean latency | 106ms |
-| Cost reduction | 19% vs always-calling |
-
-![Benchmark](benchmark_results/benchmark.png)
 
 ## Citation
 
