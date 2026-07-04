@@ -1,0 +1,10 @@
+.venv312/
+__pycache__/
+*.pyc
+.venv/
+venv/
+artifacts/*
+!artifacts/.gitkeep
+*.npz
+*.joblib
+.pytest_cache/

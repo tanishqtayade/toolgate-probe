@@ -1,0 +1,29 @@
+Metadata-Version: 2.4
+Name: toolgate
+Version: 0.1.0
+Summary: Skip unnecessary tool calls in local LLM agents via hidden-state probing (Probe&Prefill).
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+
+# ToolGate 🚪
+
+Skip unnecessary tool calls in local LLM agents using hidden-state probing.
+
+Based on the *Probe&Prefill* method: LLMs already "know" when a tool is needed —
+the signal is linearly decodable from their hidden states. ToolGate reads that
+signal with a lightweight linear probe and steers generation accordingly.
+
+## Why
+
+Tool-augmented agents over-call tools, wasting API cost and latency.
+ToolGate cuts unnecessary calls with near-zero accuracy loss and <1ms overhead.
+
+## Quickstart
+
+```bash
+python -m venv .venv
+.venv\Scripts\Activate.ps1
+pip install torch --index-url https://download.pytorch.org/whl/cu124
+pip install -r requirements.txt
+pip install -e .
+python examples/quickstart.py

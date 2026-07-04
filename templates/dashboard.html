@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToolGate Dashboard</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: system-ui, sans-serif;
+            background: #f5f4f0;
+            color: #0b0b0b;
+            padding: 24px;
+        }
+
+        h1 {
+            font-size: 20px;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .sub {
+            font-size: 13px;
+            color: #52514e;
+            margin-bottom: 24px;
+        }
+
+        .kpi-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .kpi {
+            background: #fff;
+            border: 0.5px solid #ddd;
+            border-radius: 10px;
+            padding: 16px;
+        }
+
+        .kpi-label {
+            font-size: 12px;
+            color: #898781;
+            margin-bottom: 6px;
+        }
+
+        .kpi-value {
+            font-size: 26px;
+            font-weight: 500;
+        }
+
+        .kpi-value.green {
+            color: #0a7a3e;
+        }
+
+        .kpi-value.blue {
+            color: #185fa5;
+        }
+
+        .kpi-value.amber {
+            color: #85500b;
+        }
+
+        .row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        @media (max-width: 700px) {
+            .row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: #fff;
+            border: 0.5px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .card h2 {
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 16px;
+        }
+
+        .query-box {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+
+        .query-box input {
+            flex: 1;
+            padding: 10px 14px;
+            border: 0.5px solid #ccc;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .query-box input:focus {
+            border-color: #2a78d6;
+        }
+
+        .query-box button {
+            padding: 10px 20px;
+            background: #2a78d6;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .query-box button:hover {
+            background: #185fa5;
+        }
+
+        .query-box button:disabled {
+            background: #aaa;
+            cursor: default;
+        }
+
+        .result {
+            background: #f0f8ff;
+            border: 0.5px solid #b5d4f4;
+            border-radius: 8px;
+            padding: 14px 16px;
+            margin-bottom: 24px;
+            display: none;
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        .result .badge {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .badge.tool {
+            background: #faeeda;
+            color: #633806;
+        }
+
+        .badge.direct {
+            background: #eaf3de;
+            color: #27500a;
+        }
+
+        .history-item {
+            padding: 10px 0;
+            border-bottom: 0.5px solid #eee;
+            font-size: 12px;
+        }
+
+        .history-item:last-child {
+            border-bottom: none;
+        }
+
+        .history-item .q {
+            color: #0b0b0b;
+            font-weight: 500;
+            margin-bottom: 3px;
+        }
+
+        .history-item .meta {
+            color: #898781;
+        }
+
+        .history-empty {
+            color: #898781;
+            font-size: 13px;
+        }
+
+        .chart-wrap {
+            position: relative;
+            height: 200px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>ToolGate</h1>
+    <p class="sub">Real-time LLM routing — decide whether a query needs a tool or can be answered directly.</p>
+
+    <div class="kpi-row">
+        <div class="kpi">
+            <div class="kpi-label">Total queries</div>
+            <div class="kpi-value blue" id="k-total">0</div>
+        </div>
+        <div class="kpi">
+            <div class="kpi-label">Tool calls made</div>
+            <div class="kpi-value amber" id="k-tools">0</div>
+        </div>
+        <div class="kpi">
+            <div class="kpi-label">Direct answers</div>
+            <div class="kpi-value" id="k-direct">0</div>
+        </div>
+        <div class="kpi">
+            <div class="kpi-label">Cost saved (USD)</div>
+            <div class="kpi-value green" id="k-saved">$0.0000</div>
+        </div>
+        <div class="kpi">
+            <div class="kpi-label">Saving vs baseline</div>
+            <div class="kpi-value green" id="k-pct">0%</div>
+        </div>
+    </div>
+
+    <div class="query-box">
+        <input type="text" id="prompt-input"
+            placeholder="Ask anything — e.g. What is 42 * 99? or What is the capital of France?" />
+        <button id="send-btn" onclick="sendQuery()">Ask</button>
+    </div>
+
+    <div class="result" id="result-box">
+        <span class="badge" id="result-badge">tool</span>
+        <div id="result-response"></div>
+        <div style="margin-top:8px; color:#898781; font-size:11px;" id="result-meta"></div>
+    </div>
+
+    <div class="row">
+        <div class="card">
+            <h2>Cost comparison</h2>
+            <div class="chart-wrap"><canvas id="costChart" role="img"
+                    aria-label="Bar chart comparing cost with and without ToolGate">Cost comparison chart</canvas></div>
+        </div>
+        <div class="card">
+            <h2>Routing breakdown</h2>
+            <div class="chart-wrap"><canvas id="pieChart" role="img"
+                    aria-label="Pie chart of tool vs direct answers">Routing breakdown chart</canvas></div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Recent queries</h2>
+        <div id="history-list">
+            <p class="history-empty">No queries yet — ask something above.</p>
+        </div>
+    </div>
+
+    <script>
+        const costChart = new Chart(document.getElementById('costChart'), {
+            type: 'bar',
+            data: {
+                labels: ['Without ToolGate', 'With ToolGate'],
+                datasets: [{
+                    label: 'Cost (USD)',
+                    data: [0, 0],
+                    backgroundColor: ['#f09595', '#97c459'],
+                    borderRadius: 4,
+                }]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: { y: { beginAtZero: true, ticks: { callback: v => '$' + v.toFixed(4) } } }
+            }
+        });
+
+        const pieChart = new Chart(document.getElementById('pieChart'), {
+            type: 'doughnut',
+            data: {
+                labels: ['Tool calls', 'Direct answers'],
+                datasets: [{ data: [0, 0], backgroundColor: ['#eda100', '#1baf7a'], borderWidth: 2 }]
+            },
+            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
+        });
+
+        async function sendQuery() {
+            const input = document.getElementById('prompt-input');
+            const btn = document.getElementById('send-btn');
+            const prompt = input.value.trim();
+            if (!prompt) return;
+
+            btn.disabled = true;
+            btn.textContent = 'Thinking...';
+
+            try {
+                const res = await fetch('/query', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ prompt })
+                });
+                const data = await res.json();
+
+                // Show result
+                const box = document.getElementById('result-box');
+                const badge = document.getElementById('result-badge');
+                const resp = document.getElementById('result-response');
+                const meta = document.getElementById('result-meta');
+
+                box.style.display = 'block';
+                badge.textContent = data.tool_needed ? '🔧 Tool needed' : '💬 Direct answer';
+                badge.className = 'badge ' + (data.tool_needed ? 'tool' : 'direct');
+                resp.textContent = data.response;
+                meta.textContent = `Confidence: ${(data.prob * 100).toFixed(0)}%  ·  Latency: ${data.latency_ms}ms`;
+
+                await refreshStats();
+            } catch (e) {
+                alert('Error: ' + e.message);
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Ask';
+                input.value = '';
+                input.focus();
+            }
+        }
+
+        async function refreshStats() {
+            const res = await fetch('/stats');
+            const data = await res.json();
+
+            document.getElementById('k-total').textContent = data.total;
+            document.getElementById('k-tools').textContent = data.tool_calls;
+            document.getElementById('k-direct').textContent = data.direct_answers;
+            document.getElementById('k-saved').textContent = '$' + data.saved_usd.toFixed(4);
+            document.getElementById('k-pct').textContent = data.saved_pct + '%';
+
+            costChart.data.datasets[0].data = [data.cost_without, data.cost_with_gate];
+            costChart.update();
+
+            pieChart.data.datasets[0].data = [data.tool_calls, data.direct_answers];
+            pieChart.update();
+
+            const hist = document.getElementById('history-list');
+            if (data.history.length === 0) {
+                hist.innerHTML = '<p class="history-empty">No queries yet.</p>';
+            } else {
+                hist.innerHTML = data.history.map(h => `
+      <div class="history-item">
+        <div class="q">${h.prompt}</div>
+        <div class="meta">${h.tool_needed ? '🔧 Tool' : '💬 Direct'} · p=${h.prob} · ${h.latency_ms}ms</div>
+      </div>`).join('');
+            }
+        }
+
+        // Poll stats every 5s
+        setInterval(refreshStats, 5000);
+
+        // Send on Enter
+        document.getElementById('prompt-input').addEventListener('keydown', e => {
+            if (e.key === 'Enter') sendQuery();
+        });
+    </script>
+</body>
+
+</html>

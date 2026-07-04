@@ -1,0 +1,42 @@
+[
+    {
+        "prompt": "What is 3847 * 92714?",
+        "label": 1
+    },
+    {
+        "prompt": "What's the weather in Tokyo right now?",
+        "label": 1
+    },
+    {
+        "prompt": "Compute the 40th Fibonacci number.",
+        "label": 1
+    },
+    {
+        "prompt": "What is the current stock price of Apple?",
+        "label": 1
+    },
+    {
+        "prompt": "What is the square root of 987654?",
+        "label": 1
+    },
+    {
+        "prompt": "What is the capital of France?",
+        "label": 0
+    },
+    {
+        "prompt": "Translate 'hello' to Spanish.",
+        "label": 0
+    },
+    {
+        "prompt": "Who wrote Romeo and Juliet?",
+        "label": 0
+    },
+    {
+        "prompt": "What color is the sky on a clear day?",
+        "label": 0
+    },
+    {
+        "prompt": "Give me a synonym for 'happy'.",
+        "label": 0
+    }
+]

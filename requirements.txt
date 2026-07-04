@@ -1,0 +1,8 @@
+torch
+transformers
+accelerate
+scikit-learn
+joblib
+numpy
+matplotlib
+pytest
