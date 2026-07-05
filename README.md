@@ -114,7 +114,7 @@ If you use ToolGate in research, please cite:
 @software{toolgate2025,
   author  = {Tayade, Tanishq},
   title   = {ToolGate: LLM Routing via Hidden-State Probes},
-  year    = {2025},
+  year    = {2026},
   url     = {https://github.com/tanishqtayade/toolgate}
 }
 ```
